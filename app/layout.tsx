@@ -1,7 +1,5 @@
 import type { Metadata } from 'next';
 import { Inter, Syne } from 'next/font/google';
-import Navbar from '@/components/layout/Navbar';
-import Footer from '@/components/layout/Footer';
 import './globals.css';
 
 const inter = Inter({
@@ -28,10 +26,8 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${inter.variable} ${syne.variable}`}>
-      <body className="flex min-h-screen flex-col bg-surface text-ink antialiased">
-        <Navbar />
-        <main className="flex-1">{children}</main>
-        <Footer />
+      <body className="bg-surface text-ink antialiased">
+        {children}
       </body>
     </html>
   );
