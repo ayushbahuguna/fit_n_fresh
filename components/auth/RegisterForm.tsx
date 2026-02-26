@@ -106,7 +106,7 @@ export default function RegisterForm() {
           href="/"
           className="mb-10 block font-display text-xl font-bold text-ink lg:hidden"
         >
-          FIT N<span className="text-brand-500"> FRESH</span>
+          FIT N<span className="text-accent"> FRESH</span>
         </Link>
 
         <h1 className="text-2xl md:text-3xl">Create your account</h1>
@@ -200,7 +200,7 @@ export default function RegisterForm() {
           Already have an account?{' '}
           <Link
             href="/login"
-            className="font-semibold text-brand-500 transition-colors duration-150 hover:text-brand-600"
+            className="font-semibold text-accent transition-colors duration-150 hover:text-accent-dark"
           >
             Sign in
           </Link>

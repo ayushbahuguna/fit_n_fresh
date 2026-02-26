@@ -25,7 +25,7 @@ const PAYMENT_METHODS = ['Visa', 'Mastercard', 'UPI', 'Net Banking'];
 
 export default function Footer() {
   return (
-    <footer className="border-t border-surface-border bg-surface-muted">
+    <footer className="border-t border-primary-light/20 bg-primary">
       <Container>
 
         {/* ── Main Grid ────────────────────────────────────────────────── */}
@@ -35,11 +35,11 @@ export default function Footer() {
           <div className="col-span-2 md:col-span-1">
             <Link
               href="/"
-              className="inline-block font-display text-lg font-bold tracking-tight text-ink"
+              className="inline-block font-display text-lg font-bold tracking-tight text-white"
             >
-              FIT N<span className="text-brand-500"> FRESH</span>
+              FIT N<span className="text-accent"> FRESH</span>
             </Link>
-            <p className="mt-3 max-w-xs text-sm leading-relaxed text-ink-muted">
+            <p className="mt-3 max-w-xs text-sm leading-relaxed text-white/60">
               Premium health &amp; fitness products crafted for peak performance.
             </p>
             <div className="mt-5 flex items-center gap-2">
@@ -58,7 +58,7 @@ export default function Footer() {
           {/* Link columns */}
           {Object.entries(FOOTER_LINKS).map(([group, links]) => (
             <div key={group}>
-              <p className="text-xs font-semibold uppercase tracking-widest text-ink">
+              <p className="text-xs font-semibold uppercase tracking-widest text-white">
                 {group}
               </p>
               <ul className="mt-4 flex flex-col gap-3">
@@ -66,7 +66,7 @@ export default function Footer() {
                   <li key={link.href}>
                     <Link
                       href={link.href}
-                      className="text-sm text-ink-muted transition-colors duration-150 hover:text-ink"
+                      className="text-sm text-white/60 transition-colors duration-150 hover:text-white"
                     >
                       {link.label}
                     </Link>
@@ -79,15 +79,15 @@ export default function Footer() {
         </div>
 
         {/* ── Bottom Bar ───────────────────────────────────────────────── */}
-        <div className="flex flex-col items-center justify-between gap-4 border-t border-surface-border py-6 sm:flex-row">
-          <p className="text-xs text-ink-subtle">
+        <div className="flex flex-col items-center justify-between gap-4 border-t border-primary-light/20 py-6 sm:flex-row">
+          <p className="text-xs text-white/40">
             &copy; {new Date().getFullYear()} Fit N Fresh. All rights reserved.
           </p>
           <div className="flex items-center gap-2">
             {PAYMENT_METHODS.map((method) => (
               <span
                 key={method}
-                className="rounded border border-surface-border bg-white px-2 py-1 text-[10px] font-medium text-ink-subtle"
+                className="rounded border border-white/20 bg-white/5 px-2 py-1 text-[10px] font-medium text-white/40"
               >
                 {method}
               </span>
@@ -117,7 +117,7 @@ function SocialLink({
       target="_blank"
       rel="noopener noreferrer"
       aria-label={label}
-      className="flex h-9 w-9 items-center justify-center rounded-lg border border-surface-border bg-white text-ink-muted transition-colors duration-150 hover:border-brand-500 hover:text-brand-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"
+      className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/20 bg-transparent text-white/60 transition-colors duration-150 hover:border-accent hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
     >
       {children}
     </a>
