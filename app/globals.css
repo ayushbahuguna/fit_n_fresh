@@ -39,14 +39,14 @@
   /* ─── Focus Management ───────────────────────────────────────────────────── */
 
   :focus-visible {
-    outline: 2px solid #1E5C38; /* brand.500 */
+    outline: 2px solid #3A0A4A; /* primary.DEFAULT */
     outline-offset: 2px;
   }
 
   /* ─── Selection ──────────────────────────────────────────────────────────── */
 
   ::selection {
-    background-color: #D0F4E3; /* brand.100 */
-    color: #0E1A12;            /* ink.DEFAULT */
+    background-color: #EFE9F4; /* surface.muted */
+    color: #1A1A1A;            /* ink.DEFAULT */
   }
 }

@@ -41,7 +41,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
             'focus:outline-none focus:ring-2 focus:ring-offset-1',
             error
               ? 'border-red-400 focus:ring-red-400'
-              : 'border-surface-border hover:border-ink-subtle focus:ring-brand-500 focus:border-brand-500',
+              : 'border-surface-border hover:border-ink-subtle focus:ring-primary focus:border-primary',
             'disabled:cursor-not-allowed disabled:bg-surface-muted disabled:text-ink-muted',
             endAdornment ? 'pr-11' : undefined,
             className,

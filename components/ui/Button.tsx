@@ -13,9 +13,9 @@ export interface ButtonProps
 
 const variantStyles: Record<NonNullable<ButtonProps['variant']>, string> = {
   primary:
-    'bg-brand-500 text-white hover:bg-brand-600 active:bg-brand-700 focus-visible:ring-brand-500',
+    'bg-primary text-white hover:bg-primary-light active:bg-primary-dark focus-visible:ring-primary',
   secondary:
-    'border border-brand-500 text-brand-500 bg-transparent hover:bg-brand-50 active:bg-brand-100 focus-visible:ring-brand-500',
+    'border border-primary text-primary bg-transparent hover:bg-primary/5 active:bg-primary/10 focus-visible:ring-primary',
   ghost:
     'text-ink bg-transparent hover:bg-surface-muted active:bg-surface-border focus-visible:ring-ink',
   outline:

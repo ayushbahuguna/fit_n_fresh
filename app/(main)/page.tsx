@@ -5,7 +5,7 @@ export default function HomePage() {
   return (
     <section className="py-20 md:py-32">
       <Container>
-        <p className="mb-4 text-sm font-semibold uppercase tracking-widest text-brand-500">
+        <p className="mb-4 text-sm font-semibold uppercase tracking-widest text-accent">
           Health &amp; Fitness
         </p>
         <h1 className="max-w-2xl">

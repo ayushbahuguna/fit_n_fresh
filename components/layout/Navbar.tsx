@@ -14,16 +14,16 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-surface-border bg-white/95 backdrop-blur-sm">
+    <header className="sticky top-0 z-50 border-b border-primary-light/20 bg-primary">
       <Container>
         <div className="flex h-16 items-center justify-between">
 
           {/* ── Logo ─────────────────────────────────────────────────────── */}
           <Link
             href="/"
-            className="font-display text-lg font-bold tracking-tight text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 rounded-sm"
+            className="font-display text-lg font-bold tracking-tight text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-primary rounded-sm"
           >
-            FIT N<span className="text-brand-500"> FRESH</span>
+            FIT N<span className="text-accent"> FRESH</span>
           </Link>
 
           {/* ── Desktop Nav ──────────────────────────────────────────────── */}
@@ -35,7 +35,7 @@ export default function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-sm font-medium text-ink-muted transition-colors duration-150 hover:text-ink"
+                className="text-sm font-medium text-white/70 transition-colors duration-150 hover:text-white"
               >
                 {link.label}
               </Link>
@@ -47,13 +47,13 @@ export default function Navbar() {
             <CartButton />
             <Link
               href="/login"
-              className="text-sm font-medium text-ink-muted transition-colors duration-150 hover:text-ink"
+              className="text-sm font-medium text-white/70 transition-colors duration-150 hover:text-white"
             >
               Sign in
             </Link>
             <Link
               href="/register"
-              className="rounded-full bg-brand-500 px-5 py-2 text-sm font-semibold text-white transition-colors duration-150 hover:bg-brand-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2"
+              className="rounded-full bg-accent px-5 py-2 text-sm font-semibold text-primary transition-colors duration-150 hover:bg-accent-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-primary"
             >
               Get Started
             </Link>
@@ -68,7 +68,7 @@ export default function Navbar() {
               aria-label={isOpen ? 'Close navigation menu' : 'Open navigation menu'}
               aria-expanded={isOpen}
               aria-controls="mobile-menu"
-              className="flex h-9 w-9 items-center justify-center rounded-lg text-ink transition-colors duration-150 hover:bg-surface-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"
+              className="flex h-9 w-9 items-center justify-center rounded-lg text-white/70 transition-colors duration-150 hover:bg-primary-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
             >
               {isOpen ? <XIcon /> : <MenuIcon />}
             </button>
@@ -81,7 +81,7 @@ export default function Navbar() {
       {isOpen && (
         <div
           id="mobile-menu"
-          className="border-t border-surface-border bg-white md:hidden"
+          className="border-t border-primary-light/20 bg-primary md:hidden"
         >
           <Container>
             <nav
@@ -93,25 +93,25 @@ export default function Navbar() {
                   key={link.href}
                   href={link.href}
                   onClick={() => setIsOpen(false)}
-                  className="rounded-lg px-3 py-2.5 text-sm font-medium text-ink-muted transition-colors duration-150 hover:bg-surface-muted hover:text-ink"
+                  className="rounded-lg px-3 py-2.5 text-sm font-medium text-white/70 transition-colors duration-150 hover:bg-primary-light hover:text-white"
                 >
                   {link.label}
                 </Link>
               ))}
             </nav>
 
-            <div className="flex flex-col gap-2 border-t border-surface-border py-3">
+            <div className="flex flex-col gap-2 border-t border-primary-light/20 py-3">
               <Link
                 href="/login"
                 onClick={() => setIsOpen(false)}
-                className="rounded-lg px-3 py-2.5 text-sm font-medium text-ink-muted transition-colors duration-150 hover:bg-surface-muted hover:text-ink"
+                className="rounded-lg px-3 py-2.5 text-sm font-medium text-white/70 transition-colors duration-150 hover:bg-primary-light hover:text-white"
               >
                 Sign in
               </Link>
               <Link
                 href="/register"
                 onClick={() => setIsOpen(false)}
-                className="rounded-full bg-brand-500 px-5 py-3 text-center text-sm font-semibold text-white transition-colors duration-150 hover:bg-brand-600"
+                className="rounded-full bg-accent px-5 py-3 text-center text-sm font-semibold text-primary transition-colors duration-150 hover:bg-accent-light"
               >
                 Get Started
               </Link>
@@ -130,7 +130,7 @@ function CartButton() {
     <Link
       href="/cart"
       aria-label="Shopping cart"
-      className="flex h-9 w-9 items-center justify-center rounded-lg text-ink transition-colors duration-150 hover:bg-surface-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"
+      className="flex h-9 w-9 items-center justify-center rounded-lg text-white/70 transition-colors duration-150 hover:bg-primary-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
     >
       <svg
         width="20" height="20" viewBox="0 0 24 24"

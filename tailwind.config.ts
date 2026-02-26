@@ -9,32 +9,26 @@ const config: Config = {
     extend: {
       // ─── Brand Color System ────────────────────────────────────────────────
       colors: {
-        brand: {
-          50:  '#EDFAF3',
-          100: '#D0F4E3',
-          200: '#A1E8C8',
-          300: '#60D4A4',
-          400: '#2EBD7C',
-          500: '#1E5C38', // Primary CTA
-          600: '#174A2D',
-          700: '#103823',
-          800: '#0B2618',
-          900: '#07180F',
+        primary: {
+          DEFAULT: '#3A0A4A', // deep purple — navbar, footer, strong sections
+          light:   '#5B1E70', // medium purple — hover states, secondary fills
+          dark:    '#2A0636', // deepest — active/pressed states
         },
         accent: {
-          DEFAULT:    '#B8FF4A',
-          hover:      '#A6EF38',
-          foreground: '#0A1E08',
+          DEFAULT: '#D4AF37', // gold — primary CTAs and highlights only
+          light:   '#E7C76B', // light gold — hover
+          dark:    '#B8941E', // deep gold — active
         },
         surface: {
-          DEFAULT: '#FAFAF8',
-          muted:   '#F2F4F0',
-          border:  '#E0E8E3',
+          DEFAULT: '#F7F3F9', // background-light
+          muted:   '#EFE9F4', // subtle fills
+          border:  '#DDD0E8', // borders on light backgrounds
         },
         ink: {
-          DEFAULT: '#0E1A12',
-          muted:   '#48574F',
-          subtle:  '#6B7B72',
+          DEFAULT: '#1A1A1A', // text-primary
+          muted:   '#4A4A5A', // secondary text
+          subtle:  '#7A7A8A', // tertiary text
+          inverse: '#FFFFFF', // text-inverse (on dark bg)
         },
       },
 
@@ -51,11 +45,11 @@ const config: Config = {
 
       // ─── Shadows (tinted, layered) ─────────────────────────────────────────
       boxShadow: {
-        sm:      '0 1px 4px 0 rgba(14, 26, 18, 0.06)',
-        DEFAULT: '0 2px 12px 0 rgba(14, 26, 18, 0.08)',
-        md:      '0 4px 20px 0 rgba(14, 26, 18, 0.10)',
-        lg:      '0 8px 32px 0 rgba(14, 26, 18, 0.13)',
-        xl:      '0 16px 48px 0 rgba(14, 26, 18, 0.15)',
+        sm:      '0 1px 4px 0 rgba(58, 10, 74, 0.06)',
+        DEFAULT: '0 2px 12px 0 rgba(58, 10, 74, 0.08)',
+        md:      '0 4px 20px 0 rgba(58, 10, 74, 0.10)',
+        lg:      '0 8px 32px 0 rgba(58, 10, 74, 0.13)',
+        xl:      '0 16px 48px 0 rgba(58, 10, 74, 0.15)',
       },
 
       // ─── Transitions ───────────────────────────────────────────────────────
