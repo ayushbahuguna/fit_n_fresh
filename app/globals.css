@@ -1,3 +1,52 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-surface text-ink font-sans;
+    font-feature-settings: 'rlig' 1, 'calt' 1;
+  }
+
+  /* ─── Typography Scale ───────────────────────────────────────────────────── */
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display font-bold tracking-tight text-ink;
+  }
+
+  h1 { @apply text-4xl leading-[1.1] md:text-5xl lg:text-6xl; }
+  h2 { @apply text-3xl leading-tight md:text-4xl; }
+  h3 { @apply text-2xl leading-snug md:text-3xl; }
+  h4 { @apply text-xl leading-snug md:text-2xl; }
+  h5 { @apply text-lg leading-snug; }
+  h6 { @apply text-base leading-snug; }
+
+  p  { @apply leading-[1.75]; }
+
+  a  { @apply transition-colors duration-150; }
+
+  /* ─── Focus Management ───────────────────────────────────────────────────── */
+
+  :focus-visible {
+    outline: 2px solid #1E5C38; /* brand.500 */
+    outline-offset: 2px;
+  }
+
+  /* ─── Selection ──────────────────────────────────────────────────────────── */
+
+  ::selection {
+    background-color: #D0F4E3; /* brand.100 */
+    color: #0E1A12;            /* ink.DEFAULT */
+  }
+}
