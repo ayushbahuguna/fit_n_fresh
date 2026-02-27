@@ -69,9 +69,28 @@ export interface OrderItem {
   unit_price: number;
 }
 
-// ─── Cart (session-based, no DB table) ───────────────────────────────────────
+// ─── Cart ─────────────────────────────────────────────────────────────────────
 
 export interface CartItem {
   product_id: number;
   quantity: number;
+}
+
+export interface CartItemWithProduct {
+  product_id: number;
+  quantity: number;
+  product: {
+    name: string;
+    slug: string;
+    price: number;
+    images: string[];
+    stock: number;
+    is_active: boolean;
+  };
+}
+
+export interface CartSummary {
+  items: CartItemWithProduct[];
+  total: number;
+  itemCount: number;
 }

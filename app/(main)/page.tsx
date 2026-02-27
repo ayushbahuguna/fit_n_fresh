@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import Container from '@/components/layout/Container';
 import Button from '@/components/ui/Button';
 
@@ -15,7 +16,13 @@ export default function HomePage() {
           Premium supplements and nutrition products, crafted for serious athletes.
         </p>
         <div className="mt-10 flex flex-wrap gap-4">
-          <Button size="lg">Shop Products</Button>
+          {/* Navigational CTA — styled as a primary button but rendered as <a> */}
+          <Link
+            href="/products"
+            className="inline-flex items-center justify-center gap-2 font-semibold h-12 px-8 text-base rounded-full bg-primary text-white hover:bg-primary-light active:bg-primary-dark transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary"
+          >
+            Shop Products
+          </Link>
           <Button variant="secondary" size="lg">Learn More</Button>
         </div>
       </Container>
