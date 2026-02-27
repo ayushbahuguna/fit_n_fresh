@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { redirect, notFound } from 'next/navigation';
 import Container from '@/components/layout/Container';
+import PayButton from '@/components/payment/PayButton';
 import { getSession } from '@/lib/session';
 import { getOrderByIdForUser } from '@/services/orderService';
 import type { OrderStatus, PaymentStatus } from '@/types';
@@ -42,6 +43,33 @@ export default async function OrderDetailPage({ params }: Params) {
   return (
     <section className="py-8 sm:py-12">
       <Container>
+
+        {/* ── Payment Success Banner ───────────────────────────────────── */}
+        {order.payment_status === 'paid' && (
+          <div className="mb-6 flex items-start gap-4 rounded-2xl border border-green-200 bg-green-50 px-5 py-4 sm:px-6">
+            <CheckCircleIcon className="mt-0.5 h-5 w-5 shrink-0 text-green-600" />
+            <div>
+              <p className="text-sm font-bold text-green-800">Payment confirmed!</p>
+              <p className="mt-0.5 text-sm text-green-700">
+                Your order has been confirmed and is being prepared for dispatch.
+              </p>
+            </div>
+          </div>
+        )}
+
+        {/* ── Payment Failed Banner ────────────────────────────────────── */}
+        {order.payment_status === 'failed' && (
+          <div className="mb-6 flex items-start gap-4 rounded-2xl border border-red-200 bg-red-50 px-5 py-4 sm:px-6">
+            <XCircleIcon className="mt-0.5 h-5 w-5 shrink-0 text-red-500" />
+            <div>
+              <p className="text-sm font-bold text-red-700">Payment failed</p>
+              <p className="mt-0.5 text-sm text-red-600">
+                Your last payment attempt was unsuccessful. You can retry below.
+              </p>
+            </div>
+          </div>
+        )}
+
         {/* Breadcrumb */}
         <nav className="mb-4 flex items-center gap-1.5 text-xs text-ink-muted">
           <Link href="/orders" className="transition-colors hover:text-ink">Orders</Link>
@@ -120,8 +148,19 @@ export default async function OrderDetailPage({ params }: Params) {
             </div>
           </div>
 
-          {/* ── Right: Shipping + Info ───────────────────────────────────── */}
+          {/* ── Right: Payment + Shipping + Info ────────────────────────── */}
           <div className="w-full space-y-4 lg:w-72 xl:w-80 shrink-0">
+
+            {/* Pay Now card — shown when payment is pending or failed */}
+            {(order.payment_status === 'pending' || order.payment_status === 'failed') && (
+              <div className="rounded-2xl border border-surface-border bg-white p-5 sm:p-6">
+                <h2 className="mb-1 text-base font-bold text-ink">Complete Payment</h2>
+                <p className="mb-4 text-xs text-ink-muted">
+                  ₹{order.total.toLocaleString('en-IN', { minimumFractionDigits: 2 })} due
+                </p>
+                <PayButton orderId={order.id} total={order.total} />
+              </div>
+            )}
 
             {/* Delivery address */}
             <div className="rounded-2xl border border-surface-border bg-white p-5 sm:p-6">
@@ -155,9 +194,11 @@ export default async function OrderDetailPage({ params }: Params) {
                   <dd className={`font-semibold ${payment.className}`}>{payment.label}</dd>
                 </div>
                 {order.payment_id && (
-                  <div className="flex items-center justify-between gap-4">
-                    <dt className="text-ink-muted">Payment ID</dt>
-                    <dd className="font-mono text-xs text-ink break-all">{order.payment_id}</dd>
+                  <div className="flex items-start justify-between gap-4">
+                    <dt className="shrink-0 text-ink-muted">Payment ID</dt>
+                    <dd className="break-all text-right font-mono text-xs text-ink">
+                      {order.payment_id}
+                    </dd>
                   </div>
                 )}
               </dl>
@@ -182,6 +223,29 @@ export default async function OrderDetailPage({ params }: Params) {
 }
 
 // ─── Icons ────────────────────────────────────────────────────────────────────
+
+function CheckCircleIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+      className={className} aria-hidden="true">
+      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+      <polyline points="22 4 12 14.01 9 11.01" />
+    </svg>
+  );
+}
+
+function XCircleIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+      className={className} aria-hidden="true">
+      <circle cx="12" cy="12" r="10" />
+      <line x1="15" y1="9" x2="9" y2="15" />
+      <line x1="9" y1="9" x2="15" y2="15" />
+    </svg>
+  );
+}
 
 function ChevronIcon() {
   return (

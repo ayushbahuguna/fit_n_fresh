@@ -326,10 +326,23 @@ export async function updateOrderPayment(
   orderId: number,
   data: PaymentUpdateData,
 ): Promise<void> {
+  // Also promote order status: 'paid' → 'confirmed', 'refunded' → 'cancelled'.
+  // Failed or pending payments leave the order status unchanged.
   await pool.execute(
     `UPDATE orders
-     SET razorpay_order_id = ?, payment_id = ?, payment_status = ?
+     SET razorpay_order_id = ?, payment_id = ?, payment_status = ?,
+         status = CASE ?
+                    WHEN 'paid'     THEN 'confirmed'
+                    WHEN 'refunded' THEN 'cancelled'
+                    ELSE status
+                  END
      WHERE id = ?`,
-    [data.razorpay_order_id, data.payment_id, data.payment_status, orderId],
+    [
+      data.razorpay_order_id,
+      data.payment_id,
+      data.payment_status,
+      data.payment_status,
+      orderId,
+    ],
   );
 }
