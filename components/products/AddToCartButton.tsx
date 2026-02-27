@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Button from '@/components/ui/Button';
+import { useCart } from '@/contexts/CartContext';
 
 interface AddToCartButtonProps {
   productId: number;
@@ -11,14 +12,18 @@ interface AddToCartButtonProps {
   fullWidth?: boolean;
 }
 
+type ButtonState = 'idle' | 'loading' | 'added' | 'error';
+
 export default function AddToCartButton({
-  productId: _productId,
+  productId,
   productName: _productName,
   disabled = false,
   size = 'md',
   fullWidth = true,
 }: AddToCartButtonProps) {
-  const [added, setAdded] = useState(false);
+  const { addToCart } = useCart();
+  const [state, setState] = useState<ButtonState>('idle');
+  const [errorMsg, setErrorMsg] = useState('');
 
   if (disabled) {
     return (
@@ -28,11 +33,35 @@ export default function AddToCartButton({
     );
   }
 
-  function handleClick() {
-    if (added) return;
-    // TODO: dispatch to cart context/store when cart module is built
-    setAdded(true);
-    setTimeout(() => setAdded(false), 2000);
+  async function handleClick() {
+    if (state !== 'idle') return;
+    setState('loading');
+    try {
+      await addToCart(productId);
+      setState('added');
+      setTimeout(() => setState('idle'), 2000);
+    } catch (err) {
+      setErrorMsg(err instanceof Error ? err.message : 'Failed to add to cart');
+      setState('error');
+      setTimeout(() => setState('idle'), 3000);
+    }
+  }
+
+  if (state === 'added') {
+    return (
+      <Button variant="primary" size={size} fullWidth={fullWidth} aria-live="polite">
+        <CheckIcon />
+        Added to Cart
+      </Button>
+    );
+  }
+
+  if (state === 'error') {
+    return (
+      <Button variant="outline" size={size} fullWidth={fullWidth} aria-live="polite">
+        {errorMsg || 'Failed'}
+      </Button>
+    );
   }
 
   return (
@@ -40,17 +69,10 @@ export default function AddToCartButton({
       variant="primary"
       size={size}
       fullWidth={fullWidth}
+      loading={state === 'loading'}
       onClick={handleClick}
-      aria-live="polite"
     >
-      {added ? (
-        <span className="flex items-center justify-center gap-2">
-          <CheckIcon />
-          Added to Cart
-        </span>
-      ) : (
-        'Add to Cart'
-      )}
+      Add to Cart
     </Button>
   );
 }

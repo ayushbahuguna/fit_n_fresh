@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Container from './Container';
+import { useCart } from '@/contexts/CartContext';
 
 const NAV_LINKS = [
   { label: 'Products', href: '/products' },
@@ -126,11 +127,14 @@ export default function Navbar() {
 // ─── Internal Icon Components ─────────────────────────────────────────────────
 
 function CartButton() {
+  const { summary } = useCart();
+  const count = summary?.itemCount ?? 0;
+
   return (
     <Link
       href="/cart"
-      aria-label="Shopping cart"
-      className="flex h-9 w-9 items-center justify-center rounded-lg text-white/70 transition-colors duration-150 hover:bg-primary-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+      aria-label={`Shopping cart${count > 0 ? `, ${count} item${count !== 1 ? 's' : ''}` : ''}`}
+      className="relative flex h-9 w-9 items-center justify-center rounded-lg text-white/70 transition-colors duration-150 hover:bg-primary-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
     >
       <svg
         width="20" height="20" viewBox="0 0 24 24"
@@ -142,6 +146,14 @@ function CartButton() {
         <line x1="3" y1="6" x2="21" y2="6" />
         <path d="M16 10a4 4 0 0 1-8 0" />
       </svg>
+      {count > 0 && (
+        <span
+          aria-hidden="true"
+          className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-accent text-[10px] font-bold leading-none text-primary"
+        >
+          {count > 99 ? '99+' : count}
+        </span>
+      )}
     </Link>
   );
 }
