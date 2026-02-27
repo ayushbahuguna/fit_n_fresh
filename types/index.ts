@@ -47,6 +47,17 @@ export interface Product {
 export type OrderStatus = 'pending' | 'confirmed' | 'shipped' | 'delivered' | 'cancelled';
 export type PaymentStatus = 'pending' | 'paid' | 'failed' | 'refunded';
 
+// Snapshot of shipping address stored directly on the order row (immutable)
+export interface ShippingAddress {
+  name: string;
+  line1: string;
+  line2: string | null;
+  city: string;
+  state: string;
+  pincode: string;
+  phone: string;
+}
+
 export interface Order {
   id: number;
   user_id: number;
@@ -56,7 +67,7 @@ export interface Order {
   payment_id: string | null;
   razorpay_order_id: string | null;
   total: number;
-  shipping_address: Address;
+  shipping_address: ShippingAddress;
   created_at: Date;
   updated_at: Date;
 }
@@ -69,9 +80,38 @@ export interface OrderItem {
   unit_price: number;
 }
 
-// ─── Cart (session-based, no DB table) ───────────────────────────────────────
+// Enriched order item including product name/slug for display
+export interface OrderItemWithProduct extends OrderItem {
+  product_name: string;
+  product_slug: string;
+}
+
+export interface OrderWithItems extends Order {
+  items: OrderItemWithProduct[];
+}
+
+// ─── Cart ─────────────────────────────────────────────────────────────────────
 
 export interface CartItem {
   product_id: number;
   quantity: number;
+}
+
+export interface CartItemWithProduct {
+  product_id: number;
+  quantity: number;
+  product: {
+    name: string;
+    slug: string;
+    price: number;
+    images: string[];
+    stock: number;
+    is_active: boolean;
+  };
+}
+
+export interface CartSummary {
+  items: CartItemWithProduct[];
+  total: number;
+  itemCount: number;
 }
