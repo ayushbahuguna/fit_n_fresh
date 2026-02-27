@@ -3,12 +3,16 @@ import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import Container from '@/components/layout/Container';
 import { CartProvider } from '@/contexts/CartContext';
+import { getSession } from '@/lib/session';
 
-export default function NotFound() {
+export default async function NotFound() {
+  const session = await getSession();
+  const user = session ? { role: session.role } : null;
+
   return (
     <CartProvider>
       <div className="flex min-h-screen flex-col">
-        <Navbar />
+        <Navbar user={user} />
 
         <main className="flex flex-1 items-center py-20 sm:py-28">
           <Container>

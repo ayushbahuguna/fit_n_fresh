@@ -1,9 +1,18 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Container from './Container';
 import { useCart } from '@/contexts/CartContext';
+
+interface NavUser {
+  role: 'user' | 'admin';
+}
+
+interface NavbarProps {
+  user: NavUser | null;
+}
 
 const NAV_LINKS = [
   { label: 'Products', href: '/products' },
@@ -11,8 +20,15 @@ const NAV_LINKS = [
   { label: 'Blog',     href: '/blog'     },
 ] as const;
 
-export default function Navbar() {
+export default function Navbar({ user }: NavbarProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter();
+
+  async function handleLogout() {
+    await fetch('/api/auth/logout', { method: 'POST' });
+    setIsOpen(false);
+    router.refresh();
+  }
 
   return (
     <header className="sticky top-0 z-50 border-b border-primary-light/20 bg-primary">
@@ -46,18 +62,38 @@ export default function Navbar() {
           {/* ── Desktop Actions ───────────────────────────────────────────── */}
           <div className="hidden items-center gap-3 md:flex">
             <CartButton />
-            <Link
-              href="/login"
-              className="text-sm font-medium text-white/70 transition-colors duration-150 hover:text-white"
-            >
-              Sign in
-            </Link>
-            <Link
-              href="/register"
-              className="rounded-full bg-accent px-5 py-2 text-sm font-semibold text-primary transition-colors duration-150 hover:bg-accent-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-primary"
-            >
-              Get Started
-            </Link>
+            {user ? (
+              <>
+                <Link
+                  href={user.role === 'admin' ? '/admin' : '/profile'}
+                  className="text-sm font-medium text-white/70 transition-colors duration-150 hover:text-white"
+                >
+                  {user.role === 'admin' ? 'Dashboard' : 'My Account'}
+                </Link>
+                <button
+                  type="button"
+                  onClick={handleLogout}
+                  className="rounded-full border border-white/20 px-5 py-2 text-sm font-semibold text-white/70 transition-colors duration-150 hover:bg-primary-light hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-primary"
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <Link
+                  href="/login"
+                  className="text-sm font-medium text-white/70 transition-colors duration-150 hover:text-white"
+                >
+                  Sign in
+                </Link>
+                <Link
+                  href="/register"
+                  className="rounded-full bg-accent px-5 py-2 text-sm font-semibold text-primary transition-colors duration-150 hover:bg-accent-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-primary"
+                >
+                  Get Started
+                </Link>
+              </>
+            )}
           </div>
 
           {/* ── Mobile Actions ────────────────────────────────────────────── */}
@@ -102,20 +138,41 @@ export default function Navbar() {
             </nav>
 
             <div className="flex flex-col gap-2 border-t border-primary-light/20 py-3">
-              <Link
-                href="/login"
-                onClick={() => setIsOpen(false)}
-                className="rounded-lg px-3 py-2.5 text-sm font-medium text-white/70 transition-colors duration-150 hover:bg-primary-light hover:text-white"
-              >
-                Sign in
-              </Link>
-              <Link
-                href="/register"
-                onClick={() => setIsOpen(false)}
-                className="rounded-full bg-accent px-5 py-3 text-center text-sm font-semibold text-primary transition-colors duration-150 hover:bg-accent-light"
-              >
-                Get Started
-              </Link>
+              {user ? (
+                <>
+                  <Link
+                    href={user.role === 'admin' ? '/admin' : '/profile'}
+                    onClick={() => setIsOpen(false)}
+                    className="rounded-lg px-3 py-2.5 text-sm font-medium text-white/70 transition-colors duration-150 hover:bg-primary-light hover:text-white"
+                  >
+                    {user.role === 'admin' ? 'Dashboard' : 'My Account'}
+                  </Link>
+                  <button
+                    type="button"
+                    onClick={handleLogout}
+                    className="rounded-full border border-white/20 px-5 py-3 text-left text-sm font-semibold text-white/70 transition-colors duration-150 hover:bg-primary-light hover:text-white"
+                  >
+                    Logout
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link
+                    href="/login"
+                    onClick={() => setIsOpen(false)}
+                    className="rounded-lg px-3 py-2.5 text-sm font-medium text-white/70 transition-colors duration-150 hover:bg-primary-light hover:text-white"
+                  >
+                    Sign in
+                  </Link>
+                  <Link
+                    href="/register"
+                    onClick={() => setIsOpen(false)}
+                    className="rounded-full bg-accent px-5 py-3 text-center text-sm font-semibold text-primary transition-colors duration-150 hover:bg-accent-light"
+                  >
+                    Get Started
+                  </Link>
+                </>
+              )}
             </div>
           </Container>
         </div>
