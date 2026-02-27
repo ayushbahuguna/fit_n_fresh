@@ -15,6 +15,7 @@ interface CartContextValue {
   addToCart: (productId: number, quantity?: number) => Promise<void>;
   updateQuantity: (productId: number, quantity: number) => Promise<void>;
   removeItem: (productId: number) => Promise<void>;
+  refreshCart: () => Promise<void>;
 }
 
 const CartContext = createContext<CartContextValue | null>(null);
@@ -78,7 +79,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <CartContext.Provider
-      value={{ summary, loading, addToCart, updateQuantity, removeItem }}
+      value={{ summary, loading, addToCart, updateQuantity, removeItem, refreshCart: fetchCart }}
     >
       {children}
     </CartContext.Provider>

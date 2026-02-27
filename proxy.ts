@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { COOKIE_NAME } from '@/lib/auth';
 
 // Routes requiring a logged-in user (any role)
-const USER_PROTECTED = ['/profile', '/checkout'];
+const USER_PROTECTED = ['/profile', '/checkout', '/orders'];
 
 // Routes requiring admin role
 const ADMIN_PROTECTED = ['/admin'];
@@ -92,5 +92,5 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/profile/:path*', '/checkout/:path*', '/admin/:path*'],
+  matcher: ['/profile/:path*', '/checkout/:path*', '/orders/:path*', '/admin/:path*'],
 };
